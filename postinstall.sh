@@ -90,3 +90,5 @@ module-assistant auto-install open-vm -i
 echo "Esperando 5s..."; sleep 5
 
 echo "Hecho"
+
+
