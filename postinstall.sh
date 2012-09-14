@@ -45,9 +45,9 @@ echo "auto lo"                           >> $IF_PATH
 echo "iface lo inet loopback"            >> $IF_PATH
 echo ""  >> $IF_PATH
 echo "# The primary network interface"   >> $IF_PATH
-echo "#allow-hotplug eth0"               >> $IF_PATH
-echo "auto eth0"                         >> $IF_PATH
-echo "iface eth0 inet static"            >> $IF_PATH
+echo "#allow-hotplug $IF_DEV"            >> $IF_PATH
+echo "auto $IF_DEV"                      >> $IF_PATH
+echo "iface $IF_DEV inet static"         >> $IF_PATH
 echo "        address 192.168.1.$vmip"   >> $IF_PATH
 echo "        netmask 255.255.255.0"     >> $IF_PATH
 echo "        network 192.168.1.0"       >> $IF_PATH
@@ -104,7 +104,9 @@ sleep 5
 
 echo "(Re)Installing Open VM Tools Modules..."
 module-assistant auto-install open-vm -i
-echo "Waiting 5 seconds...";
-sleep 5
+#echo "Waiting 5 seconds...";
+#sleep 5
 
+echo
+echo "NOTE: Some changes may require a reboot to take effect."
 echo "DONE"
