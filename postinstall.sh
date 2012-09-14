@@ -108,6 +108,3 @@ echo "Waiting 5 seconds...";
 sleep 5
 
 echo "DONE"
-
-
-
