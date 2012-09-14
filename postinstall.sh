@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #
 # Copyright (C) 2012 Héctor Arroyo
 #
@@ -17,12 +16,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+# config paths
 IF_PATH="/etc/network/interfaces"
 SOURCES_LST_PATH="/etc/apt/sources.list"
-LOCAL_DNS="192.168.1.105"
 RESOLVCONF_PATH="/etc/resolv.conf"
 
-echo -n "IP de esta máquina: 192.168.1.";
+# This IP is added as the first DNS server on resolv.conf
+LOCAL_DNS="192.168.1.105"
+
+# This is the interface to configure. Note config for other interfaces will
+# be deleted, and lo loopnack config will be restored to defalts.
+IF_DEV="eth0"
+
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
+echo -n "IP for this machine: 192.168.1.";
 read vmip
 
 echo "# This file describes the network interfaces available on your system" > $IF_PATH
@@ -44,20 +55,21 @@ echo "        broadcast 192.168.1.255"   >> $IF_PATH
 echo "        gateway 192.168.1.1"       >> $IF_PATH
 echo "" >> $IF_PATH
 
-echo "Generado archivo " $IF_PATH ":"
+echo "Written to file " $IF_PATH ":"
 cat $IF_PATH
 echo
 
-echo "Configurando servidores DNS"
+echo "Configuring DNS server addresses"
 echo "nameserver $LOCAL_DNS" > $RESOLVCONF_PATH
 echo "nameserver 87.216.1.65" >> $RESOLVCONF_PATH
 echo "nameserver 87.216.1.66" >> $RESOLVCONF_PATH
 echo "nameserver 62.37.228.20" >> $RESOLVCONF_PATH
 
-echo "Generado archivo " $RESOLVCONF_PATH ":"
+echo "Written to file " $RESOLVCONF_PATH ":"
 cat $RESOLVCONF_PATH
 echo
-echo "Esperando 5s..."; sleep 5
+echo "Waiting 5 seconds...";
+sleep 5
 
 DEB_LINE1="deb http://ftp.es.debian.org/debian/ squeeze main contrib"
 DEB_LINE2="deb-src http://ftp.es.debian.org/debian/ squeeze main contrib"
@@ -72,23 +84,30 @@ then
     echo "$DEB_LINE2" >> $SOURCES_LST_PATH
 fi
 
-echo "Generado archivo " $SOURCES_LST_PATH ":"
+echo "Written to file " $SOURCES_LST_PATH ":"
 cat $SOURCES_LST_PATH
 echo
-echo "Esperando 5s..."; sleep 5
+echo "Waiting 5 seconds...";
+sleep 5
 
-echo "Actualizando repositorios"
+echo "Updating repositories..."
 apt-get update
-echo "Esperando 5s..."; sleep 5
-echo "Instalando paquetes necesarios"
+echo "Waiting 5 seconds...";
+sleep 5
+
+echo "Installing required packages..."
 PAQUETES="build-essential openssh-server htop open-vm-tools open-vm-source"
 PAQUETES="$PAQUETES links2 cmake curl"
 aptitude install $PAQUETES
-echo "Esperando 5s..."; sleep 5
-echo "(Re)Instalando soporte para vmware"
-module-assistant auto-install open-vm -i
-echo "Esperando 5s..."; sleep 5
+echo "Waiting 5 seconds...";
+sleep 5
 
-echo "Hecho"
+echo "(Re)Installing Open VM Tools Modules..."
+module-assistant auto-install open-vm -i
+echo "Waiting 5 seconds...";
+sleep 5
+
+echo "DONE"
+
 
 
