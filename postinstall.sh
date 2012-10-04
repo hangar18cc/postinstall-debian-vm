@@ -25,7 +25,7 @@ RESOLVCONF_PATH="/etc/resolv.conf"
 LOCAL_DNS="192.168.1.105"
 
 # This is the interface to configure. Note config for other interfaces will
-# be deleted, and lo loopback config will be restored to defalts.
+# be deleted, and lo loopback config will be restored to defaults.
 IF_DEV="eth0"
 
 if [ "$(id -u)" != "0" ]; then
