@@ -1,5 +1,27 @@
 postinstall-debian-vm
 =====================
 
-Quick and dirty script to automate configuration on fresh-installed 
-Debian virtual machines
+Quick and dirty script to automate configuration and installation of additional
+packages on fresh-installed Debian virtual machines.
+
+Software installed:
+* build environment (packages build-essential, cmake)
+* ssh server (package openssh-server)
+* open-vm-tools (packages open-vm-tools, open-vm-source)
+* http tools (packages links2, curl)
+* htop
+
+Configuration changes:
+* /etc/network/interfaces
+    The file is overwritten, and config created for interfaces eth0 and lo.
+    Static IP is configured for eth0, you will be prompted for an IP to be used
+    as the eth0 address, in the form 192.168.1.xxx. Gateway will be set to
+    192.168.1.1.
+
+* /etc/resolv.conf
+    Some public DNS servers will be added to resolv.conf (see source).
+
+* /etc/apt/sources.list
+    Repository "http://ftp.es.debian.org/debian/ squeeze main contrib" will be
+    added (if it is not already found of sources.list), followed by and 
+    "apt-get update".
