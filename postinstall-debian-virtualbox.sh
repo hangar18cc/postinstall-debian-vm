@@ -96,16 +96,13 @@ echo "Waiting 5 seconds...";
 sleep 5
 
 echo "Installing required packages..."
-PAQUETES="build-essential openssh-server htop open-vm-tools open-vm-source"
+
+PAQUETES="build-essential openssh-server htop "
+PAQUETES="$PAQUETES virtualbox-guest-utils virtualbox-guest-dkms virtualbox-guest-source"
 PAQUETES="$PAQUETES links2 cmake curl"
 aptitude install $PAQUETES
 echo "Waiting 5 seconds...";
 sleep 5
-
-echo "(Re)Installing Open VM Tools Modules..."
-module-assistant auto-install open-vm -i
-#echo "Waiting 5 seconds...";
-#sleep 5
 
 echo
 echo "NOTE: Some changes may require a reboot to take effect."
