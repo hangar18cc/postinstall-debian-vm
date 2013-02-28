@@ -7,7 +7,8 @@ packages on fresh-installed Debian virtual machines.
 Software installed:
 * build environment (packages build-essential, cmake)
 * ssh server (package openssh-server)
-* open-vm-tools (packages open-vm-tools, open-vm-source)
+* open-vm-tools (packages open-vm-tools, open-vm-source) (VMWare) OR
+* virtualbox-guest-utils (packages virtualbox-guest-utils, virtualbox-guest-dkms, virtualbox-guest-source)
 * http tools (packages links2, curl)
 * htop
 
